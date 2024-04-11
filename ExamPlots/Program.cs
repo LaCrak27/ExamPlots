@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MathNet.Numerics.Statistics;
 
 public class Program
 {
@@ -33,14 +34,40 @@ public class Program
                 currentLine = currentKey.KeyChar.ToString();
             }
         }
+
         Console.Clear();
         Console.WriteLine("Marks: ");
         Console.ForegroundColor = ConsoleColor.Green;
+
         foreach(float mark in marks)
         {
             Console.WriteLine(mark);
         }
-        Console.ForegroundColor= ConsoleColor.White;    
+        Console.WriteLine("Press any key to process data.");
+        Console.ReadKey();
+
+        List<float> marksAccuNorm = new List<float>();
+        float accumulated = 0;
+        foreach(float mark in marks)
+        {
+            accumulated += mark;    
+            marksAccuNorm.Add(accumulated / marks.Sum());
+        }
+
+        Console.Clear();
+        float avg = marks.Average();
+        float median = marks.Median();
+        float stdv = (float)marks.StandardDeviation();
+
+
+        Console.WriteLine("Average: " + avg);
+        Console.WriteLine("Median: " + median);
+        Console.WriteLine("St. Deviation: " + stdv);
+
+        Console.WriteLine("Press any key to generate graphs");
+        Console.ReadKey();
+
+        Console.ForegroundColor = ConsoleColor.White;    
 
         /////////////////////////////////////////////////
         Console.WriteLine("Press any key to continue...");
